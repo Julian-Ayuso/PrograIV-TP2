@@ -1,41 +1,55 @@
-import { Controller, Post, Body, UploadedFile, UseInterceptors, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AutenticacionService } from './autenticacion.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+//import { v4 as uuid } from 'uuid';
+import { AutenticacionService } from './autenticacion.service';
+import { RegistroDto } from './dto/registro.dto';
+import { LoginDto } from './dto/login.dto';
 
-@Controller('autenticacion')
+// Configuración de multer: guarda la imagen en disco con nombre único
+//const storageImagenPerfil = diskStorage({
+//  destination: './uploads/perfiles',
+//  filename: (_req, file, cb) => {
+//    cb(null, `${uuid()}${extname(file.originalname)}`);
+//  },
+//});
+
+@Controller('auth')
 export class AutenticacionController {
   constructor(private readonly authService: AutenticacionService) {}
 
-  // RUTA REGISTRO
+  // POST /auth/registro  (multipart/form-data por la imagen)
+  // 201 Created si sale bien, 400 si los datos no validan, 409 si está duplicado
   @Post('registro')
-  @UseInterceptors(FileInterceptor('imagenPerfil', {
-    storage: diskStorage({
-      destination: './uploads/perfiles', // Carpeta donde se guardarán
-      filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, `${uniqueSuffix}${extname(file.originalname)}`);
-      }
-    })
-  }))
-  async registro(@Body() body: any, @UploadedFile() file: Express.Multer.File) {
-    if (!file) {
-      throw new BadRequestException('La imagen de perfil es obligatoria');
-    }
-    
-    // Aquí armamos el objeto con los datos y la URL/ruta de la imagen
-    const usuarioData = {
-      ...body,
-      imagenUrl: `/uploads/perfiles/${file.filename}`
-    };
-    ;
+  @UseInterceptors(
+    FileInterceptor('imagenPerfil', {
+      //storage: storageImagenPerfil,
+      limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB
+      fileFilter: (_req, file, cb) => {
+        if (!file.mimetype.startsWith('image/')) {
+          return cb(
+            new BadRequestException('El archivo debe ser una imagen'),
+            false,
+          );
+        }
+        cb(null, true);
+      },
+    }),
+  )
+  
+  registrar(
+    @Body() dto: RegistroDto,
+    @UploadedFile() imagen?: Express.Multer.File,
+  ) {
+    return this.authService.registrar(dto, imagen);
   }
 
-  // RUTA LOGIN
+  // POST /auth/login
+  // 200 OK con los datos del usuario, 401 si las credenciales no son válidas
   @Post('login')
-  async login(@Body() body: any) {
-    const { identificador, password } = body; // 'identificador' puede ser correo o username
-    return password;
+  @HttpCode(HttpStatus.OK)
+  login(@Body() dto: LoginDto) {
+    return this.authService.login(dto);
   }
 }

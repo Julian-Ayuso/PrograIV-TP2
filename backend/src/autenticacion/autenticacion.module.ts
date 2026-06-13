@@ -3,9 +3,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AutenticacionController } from './autenticacion.controller';
 import { AutenticacionService } from './autenticacion.service';
 import { Usuario, UsuarioSchema } from '../usuario/entities/usuario.entity'
+import { UsuarioModule } from '../usuario/usuario.module';
 
 @Module({
   imports: [
+    UsuarioModule,
     MongooseModule.forFeature([{ name: Usuario.name, schema: UsuarioSchema }])],
   controllers: [AutenticacionController],
   providers: [AutenticacionService]
