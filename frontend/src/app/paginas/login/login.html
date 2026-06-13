@@ -1,0 +1,55 @@
+<div class="escena">
+  <!-- Panel de identidad -->
+  <aside class="panel-marca" aria-hidden="true">
+    <p class="eslogan">Acercate<br />al fuego.</p>
+    <p class="bajada">Lo que la gente está contando, pasa acá.</p>
+  </aside>
+
+  <!-- Panel del formulario -->
+  <section class="panel-form">
+    <div class="tarjeta">
+      <h1>Ingresar</h1>
+      <p class="subtitulo">Usá tu correo o tu nombre de usuario.</p>
+
+      <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+        <div class="campo">
+          <label for="usuario">Correo o nombre de usuario</label>
+          <input
+            id="usuario"
+            type="text"
+            formControlName="usuario"
+            [class.invalido]="invalido('usuario')"
+            autocomplete="username"
+          />
+          <span class="ayuda-error">
+            @if (invalido('usuario')) { Ingresá tu correo o nombre de usuario. }
+          </span>
+        </div>
+
+        <div class="campo">
+          <label for="contrasena">Contraseña</label>
+          <input
+            id="contrasena"
+            type="password"
+            formControlName="contrasena"
+            [class.invalido]="invalido('contrasena')"
+            autocomplete="current-password"
+          />
+          <span class="ayuda-error">
+            @if (invalido('contrasena')) {
+              La contraseña tiene al menos 8 caracteres, una mayúscula y un número.
+            }
+          </span>
+        </div>
+
+        <button class="boton ancho" type="submit" [disabled]="enviando">
+          {{ enviando ? 'Ingresando…' : 'Ingresar' }}
+        </button>
+      </form>
+
+      <p class="pie">
+        ¿Primera vez por acá? <a routerLink="/registro">Creá tu cuenta</a>
+      </p>
+    </div>
+  </section>
+</div>

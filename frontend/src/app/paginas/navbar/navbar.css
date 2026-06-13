@@ -1,0 +1,62 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Contenedor principal de la navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 15px 30px;
+}
+
+/* Estilo del Logo / Nombre */
+.navbar-logo a {
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Contenedor de los enlaces */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Enlaces generales */
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+  color: #00bcd4;
+}
+
+/* Estilo destacado para botones (Opcional) */
+.btn-login {
+  border: 1px solid #fff;
+  padding: 5px 15px;
+  border-radius: 4px;
+}
+
+.btn-registro {
+  background-color: #00bcd4;
+  padding: 6px 15px;
+  border-radius: 4px;
+  color: #fff !important;
+}
+
+.btn-registro:hover {
+  background-color: #008ba3;
+}
