@@ -1,1 +1,46 @@
-<p>miperfil works!</p>
+<div class="contenedor">
+  @if (usuario(); as u) {
+    <div class="tarjeta perfil">
+      <div class="cabecera">
+        @if (urlImagen()) {
+          <img class="foto" [src]="urlImagen()" alt="Foto de perfil de {{ u.nombre }}" />
+        } @else {
+          <div class="foto inicial">{{ u.nombre.charAt(0) }}</div>
+        }
+        <div>
+          <h1>{{ u.nombre }} {{ u.apellido }}</h1>
+          <p class="usuario">&#64;{{ u.nick }}</p>
+          <span class="chip">{{ u.perfil }}</span>
+        </div>
+      </div>
+
+      @if (u.descripcion) { <p class="descripcion">{{ u.descripcion }}</p> }
+
+      <dl class="datos">
+        <div><dt>Correo</dt><dd>{{ u.correo }}</dd></div>
+        <div><dt>Nacimiento</dt><dd>{{ u.fecha | date: 'dd/MM/yyyy' }}</dd></div>
+      </dl>
+    </div>
+
+    <section class="mis-pub">
+      <h2>Mis últimas publicaciones</h2>
+      @if (cargando()) {
+        <p class="estado">Cargando…</p>
+      } @else if (misPublicaciones().length === 0) {
+        <p class="estado">Todavía no publicaste nada.</p>
+      } @else {
+        @for (p of misPublicaciones(); track p._id) {
+          <app-publicacion-card [publicacion]="p" (eliminada)="alEliminar($event)" />
+        }
+      }
+      <!-- Los comentarios de cada publicación se mostrarán en el Sprint 3,
+           cuando exista el módulo de comentarios en el back. -->
+    </section>
+  } @else {
+    <div class="tarjeta vacio">
+      <h1>Tu perfil te espera</h1>
+      <p>Ingresá para ver tus datos y tus publicaciones.</p>
+      <a class="boton" routerLink="/login">Ingresar</a>
+    </div>
+  }
+</div>

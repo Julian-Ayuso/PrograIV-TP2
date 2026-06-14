@@ -1,0 +1,38 @@
+.contenedor { max-width: 640px; margin: 0 auto; padding: 32px 16px 56px; }
+.cabecera { display: flex; gap: 20px; align-items: center; }
+.foto {
+  width: 84px; height: 84px; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0; border: 3px solid var(--brasa);
+}
+.foto.inicial {
+  display: grid; place-items: center;
+  background: var(--tinta); color: var(--chispa);
+  font-family: var(--fuente-titulos); font-size: 2rem; font-weight: 800;
+}
+h1 { font-size: 1.5rem; }
+.usuario { color: var(--tinta-suave); margin: 2px 0 8px; }
+.chip {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.05em; background: #fdeae7; color: var(--brasa-oscura);
+  padding: 4px 10px; border-radius: 999px;
+}
+.descripcion {
+  margin-top: 20px; padding: 16px;
+  background: var(--niebla); border-radius: 10px; line-height: 1.55;
+}
+.datos { margin-top: 20px; display: grid; gap: 12px; }
+.datos div {
+  display: flex; justify-content: space-between; gap: 12px;
+  border-bottom: 1px solid var(--linea); padding-bottom: 10px;
+}
+dt { color: var(--tinta-suave); font-size: 0.88rem; }
+dd { font-weight: 500; }
+
+.mis-pub { margin-top: 32px; }
+.mis-pub h2 { font-size: 1.25rem; margin-bottom: 16px; }
+.estado { color: var(--tinta-suave); padding: 16px 0; }
+
+.vacio { text-align: center; padding: 56px 32px; }
+.vacio p { color: var(--tinta-suave); margin: 8px 0 20px; }
+.vacio .boton { display: inline-block; }
+.vacio .boton:hover { text-decoration: none; }

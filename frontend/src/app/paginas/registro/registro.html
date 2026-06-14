@@ -1,1 +1,102 @@
-<p>registro works!</p>
+<div class="contenedor">
+  <div class="tarjeta">
+    <h1>Crear cuenta</h1>
+    <p class="subtitulo">Sumate a la ronda. Tarda menos de un minuto.</p>
+
+    <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+      <!-- Imagen de perfil -->
+      <div class="zona-imagen">
+        <label class="avatar" for="imagenPerfil">
+          @if (vistaPrevia) {
+            <img [src]="vistaPrevia" alt="Vista previa de tu foto de perfil" />
+          } @else {
+            <span>+</span>
+          }
+        </label>
+        <div>
+          <label for="imagenPerfil" class="etiqueta-imagen">Foto de perfil</label>
+          <p class="ayuda">Opcional. JPG o PNG de hasta 2 MB.</p>
+          <input
+            id="imagenPerfil"
+            type="file"
+            accept="image/*"
+            (change)="seleccionarImagen($event)"
+          />
+        </div>
+      </div>
+
+      <div class="fila">
+        <div class="campo">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" [class.invalido]="invalido('nombre')" />
+          <span class="ayuda-error">
+            @if (invalido('nombre')) { El nombre es obligatorio. }
+          </span>
+        </div>
+        <div class="campo">
+          <label for="apellido">Apellido</label>
+          <input id="apellido" formControlName="apellido" [class.invalido]="invalido('apellido')" />
+          <span class="ayuda-error">
+            @if (invalido('apellido')) { El apellido es obligatorio. }
+          </span>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input id="correo" type="email" formControlName="correo" [class.invalido]="invalido('correo')" autocomplete="email" />
+        <span class="ayuda-error">
+          @if (invalido('correo')) { Ingresá un correo válido. }
+        </span>
+      </div>
+
+      <div class="campo">
+        <label for="nombreUsuario">Nombre de usuario</label>
+        <input id="nombreUsuario" formControlName="nombreUsuario" [class.invalido]="invalido('nombreUsuario')" />
+        <span class="ayuda-error">
+          @if (invalido('nombreUsuario')) { Mínimo 3 caracteres. Tiene que ser único. }
+        </span>
+      </div>
+
+      <div class="fila">
+        <div class="campo">
+          <label for="contrasena">Contraseña</label>
+          <input id="contrasena" type="password" formControlName="contrasena" [class.invalido]="invalido('contrasena')" autocomplete="new-password" />
+          <span class="ayuda-error">
+            @if (invalido('contrasena')) { Al menos 8 caracteres, una mayúscula y un número. }
+          </span>
+        </div>
+        <div class="campo">
+          <label for="repetirContrasena">Repetir contraseña</label>
+          <input id="repetirContrasena" type="password" formControlName="repetirContrasena" [class.invalido]="invalido('repetirContrasena') || contrasenasDistintas" autocomplete="new-password" />
+          <span class="ayuda-error">
+            @if (contrasenasDistintas) { Las contraseñas no coinciden. }
+            @else if (invalido('repetirContrasena')) { Repetí tu contraseña. }
+          </span>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="fechaNacimiento">Fecha de nacimiento</label>
+        <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" [class.invalido]="invalido('fechaNacimiento')" />
+        <span class="ayuda-error">
+          @if (invalido('fechaNacimiento')) { Contanos cuándo naciste. }
+        </span>
+      </div>
+
+      <div class="campo">
+        <label for="descripcion">Descripción breve</label>
+        <textarea id="descripcion" rows="3" formControlName="descripcion" placeholder="¿Quién sos? ¿Qué te gusta contar?"></textarea>
+        <span class="ayuda-error">
+          @if (invalido('descripcion')) { Máximo 250 caracteres. }
+        </span>
+      </div>
+
+      <button class="boton ancho" type="submit" [disabled]="enviando">
+        {{ enviando ? 'Creando tu cuenta…' : 'Crear cuenta' }}
+      </button>
+    </form>
+
+    <p class="pie">¿Ya tenés cuenta? <a routerLink="/login">Ingresá</a></p>
+  </div>
+</div>

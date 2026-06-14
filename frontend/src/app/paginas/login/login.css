@@ -1,0 +1,36 @@
+.escena {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  min-height: calc(100vh - 61px);
+}
+.panel-marca {
+  background: var(--tinta);
+  color: var(--niebla);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8vw;
+}
+.eslogan {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 800; line-height: 1.05;
+}
+.eslogan::after {
+  content: '';
+  display: block;
+  width: 64px; height: 6px;
+  background: var(--brasa);
+  border-radius: 3px;
+  margin-top: 20px;
+}
+.bajada { margin-top: 18px; color: #aab2c2; font-size: 1.05rem; }
+.panel-form { display: grid; place-items: center; padding: 32px 16px; }
+.tarjeta { width: min(420px, 100%); }
+h1 { font-size: 1.8rem; margin-bottom: 4px; }
+.subtitulo { color: var(--tinta-suave); margin-bottom: 24px; font-size: 0.95rem; }
+.ancho { width: 100%; margin-top: 4px; }
+.pie { margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--tinta-suave); }
+
+@media (max-width: 760px) {
+  .escena { grid-template-columns: 1fr; }
+  .panel-marca { padding: 40px 28px; }
+}

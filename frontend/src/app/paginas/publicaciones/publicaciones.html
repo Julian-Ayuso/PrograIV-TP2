@@ -1,0 +1,64 @@
+<div class="contenedor">
+  <h1>Publicaciones</h1>
+
+  <!-- Crear publicación (solo si estás logueado) -->
+  @if (usuario()) {
+    <form class="compositor" [formGroup]="formulario" (ngSubmit)="publicar()" novalidate>
+      <input
+        class="titulo-input"
+        formControlName="titulo"
+        placeholder="Un título para tu publicación"
+        maxlength="120"
+      />
+      <textarea
+        formControlName="descripcion"
+        rows="3"
+        placeholder="¿Qué querés contar?"
+        maxlength="1000"
+      ></textarea>
+      <div class="barra">
+        <label class="adjuntar">
+          📎 {{ imagen ? imagen.name : 'Imagen (opcional)' }}
+          <input type="file" accept="image/*" (change)="seleccionarImagen($event)" hidden />
+        </label>
+        <button class="boton" type="submit" [disabled]="publicando()">
+          {{ publicando() ? 'Publicando…' : 'Publicar' }}
+        </button>
+      </div>
+    </form>
+  } @else {
+    <p class="aviso">Ingresá para crear publicaciones e interactuar.</p>
+  }
+
+  <!-- Orden -->
+  <div class="orden">
+    <span>Ordenar por</span>
+    <button [class.activo]="orden() === 'fecha'" (click)="cambiarOrden('fecha')">Más recientes</button>
+    <button [class.activo]="orden() === 'likes'" (click)="cambiarOrden('likes')">Más gustadas</button>
+  </div>
+
+  <!-- Listado -->
+  @if (cargando()) {
+    <p class="estado">Cargando publicaciones…</p>
+  } @else if (publicaciones().length === 0) {
+    <div class="vacio">
+      <h2>Todavía no hay nada por acá</h2>
+      <p>Sé el primero en encender el fogón.</p>
+    </div>
+  } @else {
+    @for (p of publicaciones(); track p._id) {
+      <app-publicacion-card [publicacion]="p" (eliminada)="alEliminar($event)" />
+    }
+
+    <!-- Paginación -->
+    <div class="paginacion">
+      <button class="boton secundario" [disabled]="!hayAnterior()" (click)="paginaAnterior()">
+        ← Anterior
+      </button>
+      <span class="indicador">Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
+      <button class="boton secundario" [disabled]="!haySiguiente()" (click)="paginaSiguiente()">
+        Siguiente →
+      </button>
+    </div>
+  }
+</div>

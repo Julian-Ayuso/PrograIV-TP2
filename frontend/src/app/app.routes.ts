@@ -3,12 +3,12 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        loadComponent: () => import('./paginas/publi/publi').then(m => m.Publi),
+        loadComponent: () => import('./paginas/publicaciones/publicaciones').then(m => m.PublicacionesComponent),
         pathMatch: 'full'
     },
     {
         path: 'publi',
-        loadComponent: () => import('./paginas/publi/publi').then(m => m.Publi),
+        loadComponent: () => import('./paginas/publicaciones/publicaciones').then(m => m.PublicacionesComponent),
     },
     {
         path: 'login',
@@ -20,10 +20,10 @@ export const routes: Routes = [
     },
     {
         path: 'miperfil',
-        loadComponent: () => import('./paginas/miperfil/miperfil').then(m => m.Miperfil)
+        loadComponent: () => import('./paginas/miperfil/miperfil').then(m => m.MiPerfil)
     },
     {
         path: '**',
-        loadComponent: () => import('./paginas/publi/publi').then(m => m.Publi)
+        loadComponent: () => import('./paginas/publicaciones/publicaciones').then(m => m.PublicacionesComponent),
     }
 ];

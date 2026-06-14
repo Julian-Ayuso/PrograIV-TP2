@@ -1,0 +1,31 @@
+.contenedor { display: grid; place-items: center; padding: 40px 16px; }
+.tarjeta { width: min(560px, 100%); }
+h1 { font-size: 1.8rem; margin-bottom: 4px; }
+.subtitulo { color: var(--tinta-suave); margin-bottom: 24px; font-size: 0.95rem; }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ancho { width: 100%; margin-top: 8px; }
+.pie { margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--tinta-suave); }
+
+.zona-imagen {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 20px;
+}
+.avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 2px dashed var(--linea);
+  display: grid; place-items: center;
+  font-size: 1.6rem; color: var(--tinta-suave);
+  cursor: pointer; overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+.avatar:hover { border-color: var(--brasa); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.etiqueta-imagen { font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+.ayuda { font-size: 0.78rem; color: var(--tinta-suave); margin: 2px 0 6px; }
+input[type='file'] { font-size: 0.82rem; }
+
+@media (max-width: 560px) {
+  .fila { grid-template-columns: 1fr; }
+}
