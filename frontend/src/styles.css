@@ -1,1 +1,78 @@
-/* You can add global styles to this file, and also import other style files */
+/* ====== Tokens de diseño de Fogón ====== */
+:root {
+  --niebla: #eef1f6;      /* fondo de la app */
+  --papel: #ffffff;       /* superficies / tarjetas */
+  --tinta: #1c2230;       /* texto principal */
+  --tinta-suave: #5b6475; /* texto secundario */
+  --linea: #d9dee8;       /* bordes */
+  --brasa: #e84e1b;       /* acento principal */
+  --brasa-oscura: #c23a0e;
+  --chispa: #ffc53d;      /* acento secundario */
+  --ok: #1f7a4d;
+  --error: #c0392b;
+
+  --fuente-titulos: 'Bricolage Grotesque', sans-serif;
+  --fuente-texto: 'Inter', sans-serif;
+  --radio: 14px;
+  --sombra: 0 10px 30px rgba(28, 34, 48, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--fuente-texto);
+  background: var(--niebla);
+  color: var(--tinta);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--fuente-titulos); letter-spacing: -0.02em; }
+
+a { color: var(--brasa); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ====== Formularios ====== */
+.campo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.campo label { font-size: 0.85rem; font-weight: 600; color: var(--tinta-suave); }
+.campo input, .campo textarea {
+  font: inherit;
+  padding: 11px 14px;
+  border: 1.5px solid var(--linea);
+  border-radius: 10px;
+  background: var(--papel);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.campo input:focus, .campo textarea:focus {
+  outline: none;
+  border-color: var(--brasa);
+  box-shadow: 0 0 0 3px rgba(232, 78, 27, 0.15);
+}
+.campo input.invalido, .campo textarea.invalido { border-color: var(--error); }
+.campo .ayuda-error { font-size: 0.78rem; color: var(--error); min-height: 1em; }
+
+.boton {
+  font: inherit; font-weight: 600;
+  padding: 12px 22px;
+  border: none; border-radius: 999px;
+  background: var(--brasa); color: #fff;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.boton:hover:not(:disabled) { background: var(--brasa-oscura); }
+.boton:active:not(:disabled) { transform: scale(0.98); }
+.boton:disabled { opacity: 0.45; cursor: not-allowed; }
+.boton.secundario { background: transparent; color: var(--tinta); border: 1.5px solid var(--linea); }
+.boton.secundario:hover:not(:disabled) { background: var(--niebla); }
+
+.tarjeta {
+  background: var(--papel);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 32px;
+}
+
+:focus-visible { outline: 3px solid var(--chispa); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
