@@ -37,7 +37,7 @@ export class PublicacionCardComponent {
     const u = this.auth.usuarioActual();
     const p = this.pub();
     if (!u || !p) return false;
-    // 'perfil' es el campo de rol del usuario. Ajustá si lo llamaste distinto."http://localhost:3000"
+    // 'perfil' es el campo de rol del usuario. Ajustá si lo llamaste distinto.
     return u._id === p.autor._id || u.perfil === 'administrador';
   });
 

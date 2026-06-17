@@ -2,9 +2,6 @@ import { Injectable, inject, signal, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
-// IMPORTANTE: estos nombres deben coincidir con lo que devuelve TU back.
-// Según tus archivos, el usuario tiene: nick, fecha, perfil, imagenPerfil.
-// Si alguno se llama distinto en tu schema, ajustalo acá (y en los templates).
 export interface Usuario {
   _id: string;
   nombre: string;
@@ -21,7 +18,7 @@ export interface Usuario {
 export class AuthService {
   private plataformaId = inject(PLATFORM_ID);
   private http = inject(HttpClient);
-  private api = "http://localhost:3000";
+  private api = "https://prograiv-tp2-l2dv.onrender.com"; //http://localhost:3000
 
   usuarioActual = signal<Usuario | null>(this.leerUsuarioGuardado());
 
@@ -29,8 +26,6 @@ export class AuthService {
     return this.http.post<Usuario>(`${this.api}/auth/registro`, datos);
   }
 
-  // El body debe coincidir con tu LoginDto. En tus archivos el campo de
-  // contraseña se llama "pass", así que mandamos { usuario, pass }.
   login(usuario: string, pass: string) {
     return this.http.post<Usuario>(`${this.api}/auth/login`, { usuario, pass });
   }

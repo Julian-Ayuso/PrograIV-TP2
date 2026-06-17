@@ -19,7 +19,7 @@ export interface Publicacion {
   descripcion: string;
   imagen: string | null;
   autor: AutorResumen;
-  meGusta: string[];        // ids de los usuarios que dieron me gusta
+  meGusta: string[];
   cantidadMeGusta: number;
   createdAt: string;
 }
@@ -39,7 +39,7 @@ export interface OpcionesListado {
 @Injectable({ providedIn: 'root' })
 export class PublicacionService {
   private http = inject(HttpClient);
-  private api = `http://localhost:3000/publicaciones`;
+  private api = `https://prograiv-tp2-l2dv.onrender.com/publicaciones`;
 
   listar(opciones: OpcionesListado = {}): Observable<RespuestaListado> {
     let params = new HttpParams();

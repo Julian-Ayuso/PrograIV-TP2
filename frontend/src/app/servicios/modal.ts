@@ -4,13 +4,10 @@ export interface DatosModal {
   tipo: 'exito' | 'error' | 'info' | 'confirmar';
   titulo: string;
   mensaje: string;
-  // Solo para tipo 'confirmar':
   textoConfirmar?: string;
   alConfirmar?: () => void;
 }
 
-// Reemplazo de alert()/confirm(): cualquier componente llama a
-// modal.mostrar({...}) y el ModalComponent global lo dibuja.
 @Injectable({ providedIn: 'root' })
 export class Modal {
   modal = signal<DatosModal | null>(null);
@@ -19,7 +16,6 @@ export class Modal {
     this.modal.set(datos);
   }
 
-  // Atajo para pedir confirmación antes de una acción destructiva
   confirmar(
     titulo: string,
     mensaje: string,
