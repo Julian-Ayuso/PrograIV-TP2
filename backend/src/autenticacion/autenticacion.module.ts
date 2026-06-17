@@ -4,10 +4,12 @@ import { AutenticacionController } from './autenticacion.controller';
 import { AutenticacionService } from './autenticacion.service';
 import { Usuario, UsuarioSchema } from '../usuario/entities/usuario.entity'
 import { UsuarioModule } from '../usuario/usuario.module';
+import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 
 @Module({
   imports: [
     UsuarioModule,
+    CloudinaryModule,
     MongooseModule.forFeature([{ name: Usuario.name, schema: UsuarioSchema }])],
   controllers: [AutenticacionController],
   providers: [AutenticacionService]

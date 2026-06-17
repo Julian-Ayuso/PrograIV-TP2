@@ -3,10 +3,12 @@ import * as bcrypt from 'bcrypt';
 import { UsuarioService } from '../usuario/usuario.service';
 import { RegistroDto } from './dto/registro.dto';
 import { LoginDto } from './dto/login.dto';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class AutenticacionService {
-  constructor(private readonly usuariosService: UsuarioService) {}
+  constructor(private readonly usuariosService: UsuarioService, private readonly cloudinary: CloudinaryService,
+  ) {}
 
   async registrar(dto: RegistroDto, imagen?: Express.Multer.File) {
     // Correo y nombre de usuario deben ser únicos -> 409 Conflict si ya existen
@@ -25,13 +27,16 @@ export class AutenticacionService {
 
     // Si vino imagen, multer ya la guardó en /uploads/perfiles
     // y acá persistimos solo su URL
-    const imagenPerfil = imagen ? `/uploads/perfiles/${imagen.filename}` : null;
+    const imagenPerfil = imagen
+    ? await this.cloudinary.subirImagen(imagen.buffer, 'perfiles')
+    : null;
 
     const usuario = await this.usuariosService.crear({
       ...dto,
       correo: dto.correo.toLowerCase(),
       pass: hash,
       fecha: new Date(dto.fecha),
+      imagenPerfil, 
     });
 
     return this.sinContrasena(usuario.toObject());
@@ -47,7 +52,7 @@ export class AutenticacionService {
 
     // bcrypt.compare hashea la contraseña recibida con el mismo salt
     // y la compara contra la guardada
-    const coincide = await bcrypt.compare(dto.contrasena, usuario.pass);
+    const coincide = await bcrypt.compare(dto.pass, usuario.pass);
     if (!coincide) {
       throw new UnauthorizedException('Credenciales incorrectas');
     }
@@ -57,7 +62,7 @@ export class AutenticacionService {
   }
 
   private sinContrasena(usuario: any) {
-    const { contrasena, ...resto } = usuario;
+    const { pass, ...resto } = usuario;
     return resto;
   }
 }

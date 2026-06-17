@@ -7,7 +7,6 @@ import { PublicacionesModule } from './publicaciones/publicaciones.module';
 import { AutenticacionModule } from './autenticacion/autenticacion.module';
 import { UsuarioModule } from './usuario/usuario.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),

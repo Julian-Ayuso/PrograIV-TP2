@@ -85,9 +85,9 @@ export class Registro {
     datos.append('nombre', valores.nombre);
     datos.append('apellido', valores.apellido);
     datos.append('correo', valores.correo);
-    datos.append('nombreUsuario', valores.nombreUsuario);
-    datos.append('contrasena', valores.contrasena);
-    datos.append('fechaNacimiento', valores.fechaNacimiento);
+    datos.append('nick', valores.nombreUsuario);
+    datos.append('pass', valores.contrasena);
+    datos.append('fecha', valores.fechaNacimiento);
     datos.append('descripcion', valores.descripcion);
     if (this.imagenSeleccionada) {
       datos.append('imagenPerfil', this.imagenSeleccionada);

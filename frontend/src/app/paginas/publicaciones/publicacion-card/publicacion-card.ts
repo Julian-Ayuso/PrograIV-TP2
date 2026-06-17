@@ -43,12 +43,12 @@ export class PublicacionCardComponent {
 
   urlImagen = computed(() => {
     const img = this.pub()?.imagen;
-    return img ? `${"http://localhost:3000"}${img}` : null;
+    return img ?? null; 
   });
 
   urlAvatar = computed(() => {
     const img = this.pub()?.autor?.imagenPerfil;
-    return img ? `${"http://localhost:3000"}${img}` : null;
+    return img ?? null;
   });
 
   alternarMeGusta() {

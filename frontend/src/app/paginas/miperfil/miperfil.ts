@@ -22,7 +22,7 @@ export class MiPerfil implements OnInit {
 
   urlImagen = computed(() => {
     const u = this.usuario();
-    return u?.imagenPerfil ? `${"http://localhost:3000"}${u.imagenPerfil}` : null;
+    return u?.imagenPerfil ?? null;
   });
 
   ngOnInit() {

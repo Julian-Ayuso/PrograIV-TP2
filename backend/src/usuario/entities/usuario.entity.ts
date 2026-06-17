@@ -28,9 +28,8 @@ export class Usuario {
   @Prop({ default: '' })
   descripcion: string;
 
-  // URL de la imagen guardada en /uploads/perfiles
-  //@Prop({ default: null })
-  //imagenPerfil: string | null;
+  @Prop({ type: String, default: null })
+  imagenPerfil: string | null;
 
   // Por defecto "usuario", se puede cambiar a "administrador"
   @Prop({ enum: ['usuario', 'administrador'], default: 'usuario' })
