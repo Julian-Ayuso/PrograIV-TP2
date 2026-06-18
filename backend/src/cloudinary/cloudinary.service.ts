@@ -12,7 +12,6 @@ export class CloudinaryService {
       api_secret: process.env.CLOUDINARY_API_SECRET,
     });
   }
-
   // Recibe el buffer del archivo (multer en memoria) y lo sube a Cloudinary.
   // Devuelve la URL pública (secure_url) que vas a guardar en Mongo.
   subirImagen(buffer: Buffer, carpeta: string): Promise<string> {

@@ -11,12 +11,9 @@ export class Publicacion {
   @Prop({ required: true, trim: true })
   descripcion: string;
 
-  // URL de la imagen, opcional. Se guarda en /uploads/publicaciones
   @Prop({ type: String, default: null })
   imagen: string | null;
 
-  // Relación con el usuario que la creó. ref: 'Usuario' debe coincidir
-  // con el nombre del modelo registrado (tu clase se llama Usuario).
   @Prop({ type: Types.ObjectId, ref: 'Usuario', required: true })
   autor: Types.ObjectId;
 
