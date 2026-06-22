@@ -25,8 +25,6 @@ export class AutenticacionService {
     // La contraseña queda encriptada (hash con salt)
     const hash = await bcrypt.hash(dto.pass, 10);
 
-    // Si vino imagen, multer ya la guardó en /uploads/perfiles
-    // y acá persistimos solo su URL
     const imagenPerfil = imagen
     ? await this.cloudinary.subirImagen(imagen.buffer, 'perfiles')
     : null;

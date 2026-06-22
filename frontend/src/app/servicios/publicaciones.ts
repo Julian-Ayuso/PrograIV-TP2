@@ -2,9 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Datos del autor que el back devuelve poblados.
-// OJO: estos nombres deben coincidir con lo que tu back hace en el populate
-// ('nombre apellido nick imagenPerfil'). Si los renombraste, ajustá acá.
 export interface AutorResumen {
   _id: string;
   nombre: string;
@@ -55,8 +52,6 @@ export class PublicacionService {
     return this.http.post<Publicacion>(this.api, datos);
   }
 
-  // DELETE con body: HttpClient lo permite pasando { body } en las opciones.
-  // (En Sprint 3, usuarioId saldrá del token y no del body.)
   eliminar(id: string, usuarioId: string) {
     return this.http.delete(`${this.api}/${id}`, { body: { usuarioId } });
   }

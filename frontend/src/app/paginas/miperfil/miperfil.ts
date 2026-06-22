@@ -29,7 +29,6 @@ export class MiPerfil implements OnInit {
     const u = this.usuario();
     if (!u) return;
     this.cargando.set(true);
-    // Mis últimas 3 publicaciones: filtro por autor + limit 3
     this.servicio.listar({ autor: u._id, limit: 3, orden: 'fecha' }).subscribe({
       next: (resp) => {
         this.misPublicaciones.set(resp.publicaciones);

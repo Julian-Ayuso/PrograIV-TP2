@@ -11,8 +11,6 @@ import { CloudinaryModule } from '../cloudinary/cloudinary.module';
     MongooseModule.forFeature([
       { name: Publicacion.name, schema: PublicacionSchema },
     ]),
-    // Necesitamos UsuarioService (buscarPorId) para chequear si quien
-    // elimina es administrador. UsuarioModule ya exporta ese service.
     UsuarioModule,
     CloudinaryModule
   ],

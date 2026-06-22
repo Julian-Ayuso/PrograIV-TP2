@@ -68,7 +68,7 @@ export class PublicacionesComponent implements OnInit {
   cambiarOrden(nuevo: 'fecha' | 'likes') {
     if (this.orden() === nuevo) return;
     this.orden.set(nuevo);
-    this.offset.set(0); // volvemos a la primera página al reordenar
+    this.offset.set(0);
     this.cargar();
   }
 
@@ -102,7 +102,7 @@ export class PublicacionesComponent implements OnInit {
     const datos = new FormData();
     datos.append('titulo', titulo);
     datos.append('descripcion', descripcion);
-    datos.append('autorId', yo._id); // en Sprint 3 saldrá del token
+    datos.append('autorId', yo._id);
     if (this.imagen) datos.append('imagen', this.imagen);
 
     this.servicio.crear(datos).subscribe({
@@ -110,7 +110,6 @@ export class PublicacionesComponent implements OnInit {
         this.publicando.set(false);
         this.formulario.reset();
         this.imagen = null;
-        // Volvemos a fecha + primera página para ver la recién creada arriba
         this.orden.set('fecha');
         this.offset.set(0);
         this.cargar();
@@ -126,7 +125,6 @@ export class PublicacionesComponent implements OnInit {
     });
   }
 
-  // El card avisó que se eliminó: la sacamos del listado sin recargar todo
   alEliminar(id: string) {
     this.publicaciones.update((lista) => lista.filter((p) => p._id !== id));
     this.total.update((t) => Math.max(0, t - 1));

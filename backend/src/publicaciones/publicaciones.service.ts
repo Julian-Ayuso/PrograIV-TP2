@@ -38,24 +38,17 @@ export class PublicacionesService {
       imagen: url,
       autor: new Types.ObjectId(autorId),
     });
-    // Devolvemos el autor poblado para que el front pueda mostrarlo enseguida
     return pub.populate('autor', 'nombre apellido nick imagenPerfil');
   }
 
-  // ----- LISTADO (orden + filtro por autor + paginado) -----
   async listar({ orden = 'fecha', autor, offset = 0, limit = 10 }: OpcionesListado) {
     const filtro: Record<string, unknown> = { activo: true };
     if (autor) filtro.autor = new Types.ObjectId(autor);
-
-    // Por defecto, las más nuevas primero. Si piden "likes", por cantidad
-    // de me gusta (y a igualdad, por fecha).
     const orderBy: Record<string, SortOrder> =
   orden === 'likes'
     ? { cantidadMeGusta: -1, createdAt: -1 }
     : { createdAt: -1 };
 
-    // Traemos la página y el total en paralelo. El total sirve para que el
-    // front sepa cuántas páginas hay.
     const [publicaciones, total] = await Promise.all([
       this.pubModel
         .find(filtro)
@@ -79,8 +72,6 @@ export class PublicacionesService {
     if (!solicitante) throw new UnauthorizedException('Usuario no válido');
 
     const esAutor = pub.autor.toString() === solicitanteId;
-    // OJO: esto asume que renombraste el campo de rol a "perfil".
-    // Si lo dejaste como "usuario", cambiá la línea por solicitante.usuario.
     const esAdmin = (solicitante as any).perfil === 'administrador';
 
     if (!esAutor && !esAdmin) {
@@ -92,7 +83,7 @@ export class PublicacionesService {
     return { mensaje: 'Publicación eliminada' };
   }
 
-  // ----- DAR ME GUSTA (uno solo por usuario) -----
+  // ----- DAR ME GUSTA -----
   async darMeGusta(idPublicacion: string, usuarioId: string) {
     const pub = await this.pubModel.findOne({ _id: idPublicacion, activo: true });
     if (!pub) throw new NotFoundException('La publicación no existe');
@@ -108,7 +99,7 @@ export class PublicacionesService {
     return { cantidadMeGusta: pub.cantidadMeGusta };
   }
 
-  // ----- QUITAR ME GUSTA (solo si lo había dado) -----
+  // ----- QUITAR ME GUSTA -----
   async quitarMeGusta(idPublicacion: string, usuarioId: string) {
     const pub = await this.pubModel.findOne({ _id: idPublicacion, activo: true });
     if (!pub) throw new NotFoundException('La publicación no existe');

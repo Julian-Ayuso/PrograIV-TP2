@@ -17,8 +17,6 @@ export class Usuario {
   @Prop({ required: true, unique: true, trim: true })
   nick: string;
 
-  // Siempre guardada hasheada con bcrypt, nunca en texto plano.
-  // select: false -> no viaja en los find() salvo que se pida explícitamente
   @Prop({ required: true, select: false })
   pass: string;
 
@@ -31,11 +29,9 @@ export class Usuario {
   @Prop({ type: String, default: null })
   imagenPerfil: string | null;
 
-  // Por defecto "usuario", se puede cambiar a "administrador"
   @Prop({ enum: ['usuario', 'administrador'], default: 'usuario' })
   usuario: string;
 
-  // Para la baja lógica de sprints futuros
   @Prop({ default: true })
   activo: boolean;
 }

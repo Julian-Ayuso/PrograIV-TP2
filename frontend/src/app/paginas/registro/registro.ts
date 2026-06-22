@@ -5,7 +5,6 @@ import { AuthService } from '../../servicios/auth';
 import { Modal } from '../../servicios/modal';
 import { REGEX_CONTRASENA } from '../login/login';
 
-// Validador cruzado: compara contrasena y repetirContrasena a nivel formulario
 function contrasenasIguales(grupo: AbstractControl): ValidationErrors | null {
   const pass = grupo.get('contrasena')?.value;
   const repetida = grupo.get('repetirContrasena')?.value;
@@ -19,6 +18,7 @@ function contrasenasIguales(grupo: AbstractControl): ValidationErrors | null {
   templateUrl: './registro.html',
   styleUrls: ['./registro.css'],
 })
+
 export class Registro {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
@@ -56,7 +56,6 @@ export class Registro {
     );
   }
 
-  // input type="file": guarda el archivo y genera la vista previa
   seleccionarImagen(evento: Event) {
     const input = evento.target as HTMLInputElement;
     const archivo = input.files?.[0] ?? null;
@@ -78,8 +77,6 @@ export class Registro {
     }
     this.enviando = true;
 
-    // FormData porque la imagen viaja como multipart/form-data.
-    // repetirContrasena NO se manda: es validación solo del front.
     const valores = this.formulario.getRawValue();
     const datos = new FormData();
     datos.append('nombre', valores.nombre);

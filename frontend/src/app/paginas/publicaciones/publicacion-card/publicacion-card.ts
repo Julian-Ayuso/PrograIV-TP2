@@ -12,6 +12,7 @@ import { PublicacionService, Publicacion } from '../../../servicios/publicacione
   templateUrl: './publicacion-card.html',
   styleUrls: ['./publicacion-card.css'],
 })
+
 export class PublicacionCardComponent {
   @Input({ required: true }) set publicacion(valor: Publicacion) {
     this.pub.set(valor);
@@ -20,7 +21,7 @@ export class PublicacionCardComponent {
     this.leDiMeGusta.set(!!yo && valor.meGusta.includes(yo));
   }
 
-  // Avisamos al padre cuando se eliminó, para que la saque del listado
+  // Aviso al padre cuando se eliminó, para que la saque del listado
   @Output() eliminada = new EventEmitter<string>();
 
   private auth = inject(AuthService);
@@ -32,12 +33,10 @@ export class PublicacionCardComponent {
   leDiMeGusta = signal(false);
   procesando = signal(false);
 
-  // ¿Puedo borrar esta publicación? Solo si soy el autor o administrador.
   puedoEliminar = computed(() => {
     const u = this.auth.usuarioActual();
     const p = this.pub();
     if (!u || !p) return false;
-    // 'perfil' es el campo de rol del usuario. Ajustá si lo llamaste distinto.
     return u._id === p.autor._id || u.perfil === 'administrador';
   });
 

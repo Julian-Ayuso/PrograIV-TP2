@@ -5,7 +5,6 @@ import { Readable } from 'stream';
 @Injectable()
 export class CloudinaryService {
   constructor() {
-    // Lee las credenciales del .env (y de las env vars de Vercel en producción)
     cloudinary.config({
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
       api_key: process.env.CLOUDINARY_API_KEY,
@@ -17,7 +16,7 @@ export class CloudinaryService {
   subirImagen(buffer: Buffer, carpeta: string): Promise<string> {
     return new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { folder: carpeta }, // ej: 'perfiles' o 'publicaciones'
+        { folder: carpeta },
         (error: UploadApiErrorResponse | undefined, result?: UploadApiResponse) => {
           if (error || !result) return reject(error);
           resolve(result.secure_url);

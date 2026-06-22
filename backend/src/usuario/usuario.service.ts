@@ -13,13 +13,10 @@ export class UsuarioService {
     return this.usuarioModel.create(datos);
   }
 
-  // Para validar unicidad en el registro
   buscarCorreoNick(correo: string, nick: string) {
     return this.usuarioModel.findOne({ $or: [{ correo }, { nick }] }).exec();
   }
 
-  // Para el login: "usuario" puede ser el correo o el nombre de usuario.
-  // Pedimos explícitamente la contraseña porque tiene select: false.
   buscarLogin(usuario: string) {
     return this.usuarioModel
     .findOne({
